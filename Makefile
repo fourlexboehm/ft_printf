@@ -1,43 +1,34 @@
-CC		= gcc
-CFLAGS	= -Werror -Wall -Wextra -I -g
+NAME = libftprintf.a
+CFLAGS = -Wall -Wextra -Werror
+SRCS = srcs/ft_printf.c
+INCLUDES = ./includes/
+LIBFT = ./libft/
+LIBFT_A = ./libft/libft.a
 
-NAME  = libprintf.a
-SRCS = srcs/ft_printf.c 
-##srcs/ft_char.c srcs/ft_hex.c
 OBJS = $(SRCS:.c=.o)
-HEADER = include/printf.h
 
-
+.c.o:
+	gcc $(CFLAGS) -g -c $< -o $(<:.c=.o) -I$(INCLUDES)
 
 all: $(NAME)
 
-$(NAME): libft $(OBJS)
-	ar rcs $(NAME) $(OBJS)
-	MAKE bonus -C ./libft
-
-test:
-	gcc main.c srcs/ft_printf.c libft/libft.a
-	./a.out
-
-libft:
-	make bonus -C ./libft
-	cp libft/libft.a $(NAME)
-
-%.o		:	%.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-
-
-bonus:	all
+$(NAME): $(OBJS)
+	make -C $(LIBFT)
+	cp $(LIBFT_A) $(NAME)
+	gcc -c $(CFLAGS) -I$(INCLUDES) $(SRCS)
+	ar -rcs $(NAME) $(OBJS)
 
 clean:
-	rm -rf *.o
-	make clean -C ./libft
+	make clean -C $(LIBFT)
+	rm -rf $(OBJS)
 
-fclean: clean
+fclean:
+	rm -rf $(OBJS)
 	rm -rf $(NAME)
-	echo "[INFO] Library [$(NAME) removed!"
+	make fclean -C $(LIBFT)
 
-#Re-make everything.
-re:		fclean all
+re: fclean all
 
+test:
+	cc main.c srcs/ft_printf.c libft/libft.a
+	./a.out
