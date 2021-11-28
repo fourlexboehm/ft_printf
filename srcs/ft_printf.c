@@ -6,11 +6,17 @@
 /*   By: aboehm <aboehm@42adel.org.au>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:42:11 by aboehm            #+#    #+#             */
-/*   Updated: 2021/11/27 21:02:39 by aboehm           ###   ########.fr       */
+/*   Updated: 2021/11/27 23:23:50 by aboehm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+
+int write_char(char c)
+{
+	write(1, &c, 1);
+	return (1);
+}
 
 int	write_str(char *str)
 {
@@ -44,28 +50,31 @@ int	put_pointer(void *pointer)
 	return (2 + (put_hex((size_t)pointer, 'x', count)));
 }
 
+
 int	flag_select(char *str_in, va_list arglist, size_t count)
 {
 	if (*str_in == 'd' || *str_in == 'i')
-		ft_putnbr_fd((long)va_arg(arglist, int), 1);
+	{
+		ft_putnbr_fd(va_arg(arglist, int), 1);
+		count += sizeof(int);
+	}
 	else if (*str_in == 'c')
-		ft_putchar_fd(va_arg(arglist, int), 1);
-		count++;
+		count += write_char(va_arg(arglist, int));
 	else if (*str_in == 's')
 		count += write_str(va_arg(arglist, char *));
 	else if (*str_in == 'p')
 		count += put_pointer(va_arg(arglist, void *));
 	else if (*str_in == 'u')
+	{
 		ft_putnbr_fd(va_arg(arglist, int), 1);
 		count += sizeof(int);
+	}
 	else if (*str_in == 'x'|| *str_in == 'X')
 		count = put_hex(va_arg(arglist, int), *str_in, count);
 	else if ( *str_in == '%')
-		write(1, "%", 1);
-		count++;
+		count += write_char('%');
 	else if (*str_in != 0)
-		write(1, &*str_in, 1);
-		count++;
+		count += write_char(*str_in);
 	else
 		count = 0;
 	return (count);
