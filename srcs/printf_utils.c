@@ -1,26 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   printf_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aboehm <aboehm@42adel.org.au>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 21:46:29 by aboehm            #+#    #+#             */
-/*   Updated: 2021/12/01 15:19:12 by aboehm           ###   ########.fr       */
+/*   Created: 2021/11/24 21:42:11 by aboehm            #+#    #+#             */
+/*   Updated: 2021/12/01 15:17:49 by aboehm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTF_H
-# define PRINTF_H
-# include "../libft/libft.h"
-# include <stdarg.h>
+#include "../includes/ft_printf.h"
 
-int		ft_printf(const char *format, ...);
-int		write_int(int i);
-int 	write_uint(unsigned int i);
-int 	write_char(char c);
-int		write_str(char *str);
-int 	numlen(int n);
-int		putuint(unsigned int n);
+int numlen(int i)
+{
+	int	len;
 
-#endif
+	len = 0;
+	if (i <= 0)
+		len = 1;
+	else
+		len = 0;
+	while (i != 0)
+	{
+		i = i / 10;
+		len ++;
+	}
+	return (len);
+}
+int	write_int(int i)
+{
+	ft_putnbr_fd(i, 1);
+	return numlen(i);
+}
+
+int	write_str(char *str)
+{
+	if (!str)
+		str = "(null)";
+	ft_putstr_fd(str, 1);
+	return (ft_strlen(str));
+}
+
+

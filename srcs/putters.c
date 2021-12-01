@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   putters.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aboehm <aboehm@42adel.org.au>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 21:46:29 by aboehm            #+#    #+#             */
-/*   Updated: 2021/12/01 15:19:12 by aboehm           ###   ########.fr       */
+/*   Created: 2021/11/24 21:42:11 by aboehm            #+#    #+#             */
+/*   Updated: 2021/12/01 15:13:09 by aboehm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTF_H
-# define PRINTF_H
-# include "../libft/libft.h"
-# include <stdarg.h>
+#include "../includes/ft_printf.h"
 
-int		ft_printf(const char *format, ...);
-int		write_int(int i);
-int 	write_uint(unsigned int i);
-int 	write_char(char c);
-int		write_str(char *str);
-int 	numlen(int n);
-int		putuint(unsigned int n);
+int	putuint(unsigned int n)
+{
+	int len;
 
-#endif
+	len = 0;
+	if (n > 9)
+	{
+		putuint(n / 10);
+		putuint(n % 10);
+	}
+	else
+	{
+		len++;
+		ft_putchar_fd(n + 48, 1);
+	}
+	return (len);
+}

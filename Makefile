@@ -1,6 +1,6 @@
 NAME = libftprintf.a
 CFLAGS = -Wall -Wextra -Werror
-SRCS = srcs/ft_printf.c
+SRCS = srcs/ft_printf.c srcs/printf_utils.c srcs/putters.c
 INCLUDES = ./includes/
 LIBFT = ./libft/
 LIBFT_A = ./libft/libft.a
@@ -30,5 +30,5 @@ fclean:
 re: fclean all
 
 test:
-	cc main.c srcs/ft_printf.c libft/libft.a
+	cc main.c srcs/ft_printf.c srcs/printf_utils.c srcs/putters.c libft/libft.a
 	./a.out

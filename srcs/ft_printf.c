@@ -6,7 +6,7 @@
 /*   By: aboehm <aboehm@42adel.org.au>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:42:11 by aboehm            #+#    #+#             */
-/*   Updated: 2021/11/27 23:23:50 by aboehm           ###   ########.fr       */
+/*   Updated: 2021/12/01 15:13:08 by aboehm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@ int write_char(char c)
 {
 	write(1, &c, 1);
 	return (1);
-}
-
-int	write_str(char *str)
-{
-	if (!str)
-		str = "(null)";
-	ft_putstr_fd(str, 1);
-	return (ft_strlen(str));
 }
 
 int put_hex(size_t n, char base, size_t count)
@@ -54,10 +46,7 @@ int	put_pointer(void *pointer)
 int	flag_select(char *str_in, va_list arglist, size_t count)
 {
 	if (*str_in == 'd' || *str_in == 'i')
-	{
-		ft_putnbr_fd(va_arg(arglist, int), 1);
-		count += sizeof(int);
-	}
+		count += write_int(va_arg(arglist, int));
 	else if (*str_in == 'c')
 		count += write_char(va_arg(arglist, int));
 	else if (*str_in == 's')
@@ -65,10 +54,7 @@ int	flag_select(char *str_in, va_list arglist, size_t count)
 	else if (*str_in == 'p')
 		count += put_pointer(va_arg(arglist, void *));
 	else if (*str_in == 'u')
-	{
-		ft_putnbr_fd(va_arg(arglist, int), 1);
-		count += sizeof(int);
-	}
+		count += putuint(va_arg(arglist, int));
 	else if (*str_in == 'x'|| *str_in == 'X')
 		count = put_hex(va_arg(arglist, int), *str_in, count);
 	else if ( *str_in == '%')
