@@ -16,11 +16,12 @@
 # include <stdarg.h>
 
 int		ft_printf(const char *format, ...);
-int		write_int(int i);
-int 	write_uint(unsigned int i);
+int     write_int(int i);
+void 	write_uint(unsigned int n, int *count);
 int 	write_char(char c);
 int		write_str(char *str);
-int 	numlen(int n);
-int		putuint(unsigned int n);
+int 	num_len(int n);
+void    put_hex(unsigned int n, int *count, char c);
+int     put_pointer(void *pointer, int *count);
 
 #endif

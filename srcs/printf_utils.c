@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf_utils.c                                        :+:      :+:    :+:   */
+/*   printf_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aboehm <aboehm@42adel.org.au>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:42:11 by aboehm            #+#    #+#             */
-/*   Updated: 2021/12/01 15:17:49 by aboehm           ###   ########.fr       */
+/*   Updated: 2021/12/04 19:02:09 by aboehm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int numlen(int i)
+static void	put_uint(unsigned int n, int fd, int *count)
+{
+	if (n >= 10)
+		put_uint(n / 10, fd, count);
+	ft_putchar_fd(n % 10 + '0', fd);
+	(*count)++;
+}
+
+void	write_uint(unsigned int n, int *count)
+{
+	put_uint(n, 1, count);
+}
+
+int num_len(int i)
 {
 	int	len;
 
@@ -31,7 +44,7 @@ int numlen(int i)
 int	write_int(int i)
 {
 	ft_putnbr_fd(i, 1);
-	return numlen(i);
+	return num_len(i);
 }
 
 int	write_str(char *str)

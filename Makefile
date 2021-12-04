@@ -1,6 +1,6 @@
 NAME = libftprintf.a
 CFLAGS = -Wall -Wextra -Werror
-SRCS = srcs/ft_printf.c srcs/printf_utils.c srcs/putters.c
+SRCS = srcs/ft_printf.c srcs/printf_utils.c srcs/hex.c
 INCLUDES = ./includes/
 LIBFT = ./libft/
 LIBFT_A = ./libft/libft.a
@@ -22,13 +22,11 @@ clean:
 	make clean -C $(LIBFT)
 	rm -rf $(OBJS)
 
-fclean:
-	rm -rf $(OBJS)
+fclean: clean
 	rm -rf $(NAME)
-	make fclean -C $(LIBFT)
 
 re: fclean all
 
 test:
-	cc main.c srcs/ft_printf.c srcs/printf_utils.c srcs/putters.c libft/libft.a
+	cc main.c $(SRCS) $(LIBFT_A)
 	./a.out

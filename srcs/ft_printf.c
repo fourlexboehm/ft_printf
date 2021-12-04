@@ -18,32 +18,10 @@ int write_char(char c)
 	return (1);
 }
 
-int put_hex(size_t n, char base, size_t count)
-{
-	char *basep;
-
-		if (base == 'x')
-			basep = "0123456789abcdef";
-		else
-			basep = "0123456789ABCDEF";
-	if (n >= 16)
-		put_hex(n / 16, base, count);
-	ft_putchar_fd(basep[n % 16], 1);
-	count++;
-	return (count);
-}
-
-int	put_pointer(void *pointer)
-{
-	size_t count;
-	
-	count = 0;
-	ft_putstr_fd("0x", 1);
-	return (2 + (put_hex((size_t)pointer, 'x', count)));
-}
 
 
-int	flag_select(char *str_in, va_list *arglist, size_t count)
+
+int	flag_select(char const * str_in, va_list *arglist, int count)
 {
 	if (*str_in == 'd' || *str_in == 'i')
 		count += write_int(va_arg(*arglist, int));
@@ -52,11 +30,11 @@ int	flag_select(char *str_in, va_list *arglist, size_t count)
 	else if (*str_in == 's')
 		count += write_str(va_arg(*arglist, char *));
 	else if (*str_in == 'p')
-		count += put_pointer(va_arg(*arglist, void *));
+		count += put_pointer(va_arg(*arglist, void *), &count);
 	else if (*str_in == 'u')
-		count += putuint(va_arg(*arglist, int));
+		write_uint(va_arg(*arglist, int), &count);
 	else if (*str_in == 'x'|| *str_in == 'X')
-		count = put_hex(va_arg(*arglist, int), *str_in, count);
+        put_hex(va_arg(*arglist, int), &count, *str_in);
 	else if ( *str_in == '%')
 		count += write_char('%');
 	else if (*str_in != 0)
@@ -68,7 +46,7 @@ int	flag_select(char *str_in, va_list *arglist, size_t count)
 
 int	ft_printf(const char *format, ...)
 {
-	size_t	count;
+	int	count;
 	char	*str_in;
 	va_list	arglist;
 

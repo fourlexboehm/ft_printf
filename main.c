@@ -16,5 +16,5 @@ int main ()
 	ft_printf("\n%x\n", 8293482);
 	ft_printf("\n%X\n", 8293482);
 	*/
-//	ft_printf("\n\nMultitest Char: %c\n Int: %i\n");
+	ft_printf("\n\nMultitest Char: %c\n Int: %i\n");
 }
