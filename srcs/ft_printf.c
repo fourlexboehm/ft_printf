@@ -6,21 +6,18 @@
 /*   By: aboehm <aboehm@42adel.org.au>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:42:11 by aboehm            #+#    #+#             */
-/*   Updated: 2021/12/01 19:05:36 by aboehm           ###   ########.fr       */
+/*   Updated: 2021/12/08 12:02:23 by aboehm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int write_char(char c)
+int	write_char(char c)
 {
 	return (write(1, &c, 1));
 }
 
-
-
-/*
-int	flag_select(char const * str_in, va_list *arglist, int count)
+int	flag_select(char const *str_in, va_list *arglist, int count)
 {
 	if (*str_in == 'd' || *str_in == 'i')
 		count += write_int(va_arg(*arglist, int));
@@ -32,9 +29,9 @@ int	flag_select(char const * str_in, va_list *arglist, int count)
 		count += put_pointer(va_arg(*arglist, void *), &count);
 	else if (*str_in == 'u')
 		write_uint(va_arg(*arglist, int), &count);
-	else if (*str_in == 'x'|| *str_in == 'X')
-        put_hex(va_arg(*arglist, int), &count, *str_in);
-	else if ( *str_in == '%')
+	else if (*str_in == 'x' || *str_in == 'X')
+		put_hex(va_arg(*arglist, int), &count, *str_in);
+	else if (*str_in == '%')
 		count += write_char('%');
 	else if (*str_in != 0)
 		count += write_char(*str_in);
@@ -42,37 +39,10 @@ int	flag_select(char const * str_in, va_list *arglist, int count)
 		count = 0;
 	return (count);
 }
-*/
-int	flag_select(char const * str_in, va_list *arglist, int count)
-{
-    switch (*str_in)
-    {
-        case 'd' | 'a':
-            return (write_int(va_arg(*arglist, int)));
-        case 'c':
-            return (write_char(va_arg(*arglist, int)));
-        case 's':
-            return (write_str(va_arg(*arglist, char *)));
-        case 'p':
-            return (put_pointer(va_arg(*arglist, void *), &count));
-        case 'u':
-            write_uint(va_arg(*arglist, int), &count);
-            return (0);
-        case 'x' | 'X':
-            put_hex(va_arg(*arglist, int), &count, *str_in);
-            return (0);
-        case '%':
-            return write_char('%');
-        case 0:
-            return (write_char(*str_in));
-        default :
-            count = 0;
-    }
-    return (count);
-}
+
 int	ft_printf(const char *format, ...)
 {
-	int	count;
+	int		count;
 	char	*str_in;
 	va_list	arglist;
 
@@ -88,7 +58,6 @@ int	ft_printf(const char *format, ...)
 		}
 		else
 		{
-
 			count = flag_select(++str_in, &arglist, count);
 			str_in++;
 		}

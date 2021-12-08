@@ -6,7 +6,7 @@
 /*   By: aboehm <aboehm@42adel.org.au>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:42:11 by aboehm            #+#    #+#             */
-/*   Updated: 2021/12/04 19:02:09 by aboehm           ###   ########.fr       */
+/*   Updated: 2021/12/08 12:04:42 by aboehm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	write_uint(unsigned int n, int *count)
 	put_uint(n, 1, count);
 }
 
-int num_len(int i)
+int	num_len(int i)
 {
 	int	len;
 
@@ -41,10 +41,11 @@ int num_len(int i)
 	}
 	return (len);
 }
+
 int	write_int(int i)
 {
 	ft_putnbr_fd(i, 1);
-	return num_len(i);
+	return (num_len(i));
 }
 
 int	write_str(char *str)
@@ -54,5 +55,3 @@ int	write_str(char *str)
 	ft_putstr_fd(str, 1);
 	return (ft_strlen(str));
 }
-
-
