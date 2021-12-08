@@ -28,5 +28,5 @@ fclean: clean
 re: fclean all
 
 test:
-	cc main.c $(SRCS) $(LIBFT_A)
+	cc main.c -g $(SRCS) $(LIBFT_A)
 	./a.out
