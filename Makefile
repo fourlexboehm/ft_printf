@@ -21,6 +21,7 @@ $(NAME): $(OBJS)
 clean:
 	make clean -C $(LIBFT)
 	rm -rf $(OBJS)
+	rm -rf ft_printf.o printf_utils.o hex.o
 
 fclean: clean
 	rm -rf $(NAME)
