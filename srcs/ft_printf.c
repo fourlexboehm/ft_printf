@@ -17,7 +17,7 @@ int	write_char(char c)
 	return (write(1, &c, 1));
 }
 
-int	flag_select(char const *str_in, va_list *arglist, int count)
+int	format_selector(char const *str_in, va_list *arglist, int count)
 {
 	if (*str_in == 'd' || *str_in == 'i')
 		count += write_int(va_arg(*arglist, int));
@@ -58,7 +58,7 @@ int	ft_printf(const char *format, ...)
 		}
 		else
 		{
-			count = flag_select(++str_in, &arglist, count);
+			count = format_selector(++str_in, &arglist, count);
 			str_in++;
 		}
 		if (count == 0)
